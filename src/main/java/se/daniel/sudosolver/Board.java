@@ -47,6 +47,10 @@ class Board {
                 .collect(toList());
     }
 
+    public boolean isAllNumbersSet() {
+        return range(0, 9).flatMap(r -> Arrays.stream(rows[r])).noneMatch(n -> n == 0);
+    }
+
     private void verifyBoardDimensions() {
 
         if(rows.length != 9) {

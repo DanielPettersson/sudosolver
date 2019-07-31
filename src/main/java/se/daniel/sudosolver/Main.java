@@ -19,7 +19,7 @@ public class Main {
         final var solver = new SudoSolver(board);
         final var renderer = new BoardRenderer(System.out);
 
-        while (!solver.isSolved()) {
+        while (!board.isAllNumbersSet()) {
 
             renderer.render(board);
             solver.step();
