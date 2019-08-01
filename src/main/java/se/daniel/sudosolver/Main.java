@@ -17,13 +17,11 @@ public class Main {
 
         final var board = new Board(rows);
         final var solver = new SudoSolver(board);
-        final var renderer = new BoardRenderer(System.out);
+        final var renderer = new BoardRenderer(board, System.out);
 
-        while (!board.isAllNumbersSet()) {
-
-            renderer.render(board);
-            solver.step();
-        }
+        do {
+            renderer.render();
+        } while (solver.step());
 
     }
 }

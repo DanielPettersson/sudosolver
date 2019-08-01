@@ -7,7 +7,7 @@ class SudoSolver {
 
     private final Board board;
 
-    void step() {
-
+    boolean step() {
+        return false;
     }
 }

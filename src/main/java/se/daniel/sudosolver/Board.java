@@ -21,14 +21,14 @@ class Board {
         verifyValidBoardNumbers();
     }
 
-    public List<Integer> getRowNumbers(int row) {
+    private List<Integer> getRowNumbers(int row) {
         return Arrays.stream(rows[row])
                 .filter(v -> v != 0)
                 .boxed()
                 .collect(toList());
     }
 
-    public List<Integer> getColumnNumbers(int col) {
+    private List<Integer> getColumnNumbers(int col) {
         return Arrays.stream(rows)
                 .mapToInt(row -> row[col])
                 .filter(v -> v != 0)
@@ -36,7 +36,7 @@ class Board {
                 .collect(toList());
     }
 
-    public List<Integer> getGridNumbers(int row, int col) {
+    private List<Integer> getGridNumbers(int row, int col) {
         final var gridRow = row / 3;
         final var gridCol = col / 3;
 
@@ -47,8 +47,8 @@ class Board {
                 .collect(toList());
     }
 
-    public boolean isAllNumbersSet() {
-        return range(0, 9).flatMap(r -> Arrays.stream(rows[r])).noneMatch(n -> n == 0);
+    long countUndecidedNumbers() {
+        return range(0, 9).flatMap(r -> Arrays.stream(rows[r])).filter(n -> n == 0).count();
     }
 
     private void verifyBoardDimensions() {

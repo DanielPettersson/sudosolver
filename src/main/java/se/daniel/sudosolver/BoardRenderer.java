@@ -3,21 +3,30 @@ package se.daniel.sudosolver;
 import lombok.AllArgsConstructor;
 
 import java.io.PrintStream;
-import java.util.Arrays;
 
 @AllArgsConstructor
 class BoardRenderer {
 
+    private final Board board;
     private final PrintStream out;
 
-    void render(Board board) {
+    void render() {
 
-        Arrays.stream(board.getRows()).forEach(row -> {
-            Arrays.stream(row).mapToObj(v -> v == 0 ? "*" : Integer.toString(v)).forEach(out::print);
+        out.println("-------------------------");
+
+        for (int row = 0; row < 9; row++) {
+
+            out.print("| ");
+            for (int col = 0; col < 9; col++) {
+                final var v = board.getRows()[row][col];
+                out.print(v == 0 ? "* " : v + " ");
+                if (col % 3 == 2) out.print("| ");
+            }
             out.println("");
-        });
+            if (row % 3 == 2) out.println("-------------------------");
+        }
 
-        out.println("---------");
+        out.println("");
     }
 
 }
