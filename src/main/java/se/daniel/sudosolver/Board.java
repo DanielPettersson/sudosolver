@@ -9,7 +9,7 @@ import java.util.List;
 import static java.util.stream.Collectors.toList;
 import static java.util.stream.IntStream.range;
 
-class Board {
+public class Board {
 
     @Getter
     private final int[][] rows;
@@ -21,14 +21,31 @@ class Board {
         verifyValidBoardNumbers();
     }
 
-    private List<Integer> getRowNumbers(int row) {
+    public void setNumber(int row, int col, int number) {
+
+        if (number < 1 || number > 9) {
+            throw new IllegalArgumentException(number + " is outside of range");
+        }
+
+        if (getNumber(row, col) != 0) {
+            throw new IllegalArgumentException(row + "," + col + " number is already set to " + getNumber(row, col));
+        }
+
+        rows[row][col] = number;
+    }
+
+    public int getNumber(int row, int col) {
+        return rows[row][col];
+    }
+
+    public List<Integer> getRowNumbers(int row) {
         return Arrays.stream(rows[row])
                 .filter(v -> v != 0)
                 .boxed()
                 .collect(toList());
     }
 
-    private List<Integer> getColumnNumbers(int col) {
+    public List<Integer> getColumnNumbers(int col) {
         return Arrays.stream(rows)
                 .mapToInt(row -> row[col])
                 .filter(v -> v != 0)
@@ -36,7 +53,7 @@ class Board {
                 .collect(toList());
     }
 
-    private List<Integer> getGridNumbers(int row, int col) {
+    public List<Integer> getGridNumbers(int row, int col) {
         final var gridRow = row / 3;
         final var gridCol = col / 3;
 
@@ -64,7 +81,7 @@ class Board {
         });
     }
 
-    private void verifyValidBoardNumbers() {
+    void verifyValidBoardNumbers() {
 
         range(0, 9).forEach(r -> {
                 if (isAnyNumbersDuplicates(getRowNumbers(r))) {
