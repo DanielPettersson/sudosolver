@@ -2,12 +2,12 @@ package se.daniel.sudosolver;
 
 import lombok.Getter;
 
-import java.util.Arrays;
-import java.util.HashSet;
-import java.util.List;
+import java.util.*;
+import java.util.stream.Collectors;
 
 import static java.util.stream.Collectors.toList;
 import static java.util.stream.IntStream.range;
+import static java.util.stream.IntStream.rangeClosed;
 
 public class Board {
 
@@ -23,12 +23,8 @@ public class Board {
 
     public void setNumber(int row, int col, int number) {
 
-        if (number < 1 || number > 9) {
+        if (number < 0 || number > 9) {
             throw new IllegalArgumentException(number + " is outside of range");
-        }
-
-        if (getNumber(row, col) != 0) {
-            throw new IllegalArgumentException(row + "," + col + " number is already set to " + getNumber(row, col));
         }
 
         rows[row][col] = number;
@@ -36,6 +32,20 @@ public class Board {
 
     public int getNumber(int row, int col) {
         return rows[row][col];
+    }
+
+    public SortedSet<Integer> getAvailableNumbers(int row, int col) {
+
+        final var gridNumbers = getGridNumbers(row, col);
+        final var rowNumbers = getRowNumbers(row);
+        final var columnNumbers = getColumnNumbers(col);
+
+        final var allNumbers = rangeClosed(1, 9).boxed().collect(Collectors.toCollection(TreeSet::new));
+        allNumbers.removeAll(gridNumbers);
+        allNumbers.removeAll(rowNumbers);
+        allNumbers.removeAll(columnNumbers);
+
+        return allNumbers;
     }
 
     public List<Integer> getRowNumbers(int row) {
