@@ -11,7 +11,7 @@ public abstract class AbstractOneAndOnlyRule extends AbstractSolverRule {
 
         final var othersAvailableNumbers = getOthersAvailableNumbers(board, row, col);
 
-        board.getAvailableNumbers(row, col).forEach(n -> {
+        board.getAvailableNumbers(row, col, false).forEach(n -> {
 
             if (!othersAvailableNumbers.contains(n)) {
                 board.setNumber(row, col, n);

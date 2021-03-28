@@ -8,7 +8,7 @@ public class OnlyAvailableNumberRule extends AbstractSolverRule {
     public void apply0(Board board, int row, int col) {
 
 
-        final var availableNumbers = board.getAvailableNumbers(row, col);
+        final var availableNumbers = board.getAvailableNumbers(row, col, false);
 
         if (availableNumbers.size() == 1) {
             final var number = availableNumbers.iterator().next();

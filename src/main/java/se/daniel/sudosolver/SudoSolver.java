@@ -37,7 +37,7 @@ class SudoSolver {
                     .boxed()
                     .flatMap(r -> range(0, 9).mapToObj(c -> new BoardCoordinate(r, c)))
                     .filter(c -> board.getNumber(c.getRow(), c.getCol()) == 0)
-                    .sorted(comparing(c -> board.getAvailableNumbers(c.getRow(), c.getCol()).size()))
+                    .sorted(comparing(c -> board.getAvailableNumbers(c.getRow(), c.getCol(), true).size()))
                     .collect(toList());
 
             
@@ -48,7 +48,7 @@ class SudoSolver {
                 final var coord = coordinatesToBacktrack.get(backtrackingPos);
                 final var number = board.getNumber(coord.getRow(), coord.getCol());
 
-                final var numbersToSet = board.getAvailableNumbers(coord.getRow(), coord.getCol()).tailSet(number + 1);
+                final var numbersToSet = board.getAvailableNumbers(coord.getRow(), coord.getCol(), true).tailSet(number + 1);
 
                 if (numbersToSet.isEmpty()) {
 

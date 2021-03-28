@@ -36,9 +36,9 @@ public class Board {
         return rows[row][col];
     }
 
-    public SortedSet<Integer> getAvailableNumbers(int row, int col) {
+    public SortedSet<Integer> getAvailableNumbers(int row, int col, boolean numbersAvailableForNumberWithValue) {
         
-        if (getNumber(row, col) == 0) {
+        if (numbersAvailableForNumberWithValue || getNumber(row, col) == 0) {
 
             final var gridNumbers = getGridNumbers(row, col);
             final var rowNumbers = getRowNumbers(row);
