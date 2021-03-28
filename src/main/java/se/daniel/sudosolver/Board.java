@@ -11,6 +11,8 @@ import static java.util.stream.IntStream.rangeClosed;
 
 public class Board {
 
+    private static SortedSet<Integer> EMPTY_NUMBERS = new TreeSet<>();
+    
     @Getter
     private final int[][] rows;
 
@@ -35,17 +37,22 @@ public class Board {
     }
 
     public SortedSet<Integer> getAvailableNumbers(int row, int col) {
+        
+        if (getNumber(row, col) == 0) {
 
-        final var gridNumbers = getGridNumbers(row, col);
-        final var rowNumbers = getRowNumbers(row);
-        final var columnNumbers = getColumnNumbers(col);
+            final var gridNumbers = getGridNumbers(row, col);
+            final var rowNumbers = getRowNumbers(row);
+            final var columnNumbers = getColumnNumbers(col);
 
-        final var allNumbers = rangeClosed(1, 9).boxed().collect(Collectors.toCollection(TreeSet::new));
-        allNumbers.removeAll(gridNumbers);
-        allNumbers.removeAll(rowNumbers);
-        allNumbers.removeAll(columnNumbers);
+            final var allNumbers = rangeClosed(1, 9).boxed().collect(Collectors.toCollection(TreeSet::new));
+            allNumbers.removeAll(gridNumbers);
+            allNumbers.removeAll(rowNumbers);
+            allNumbers.removeAll(columnNumbers);
 
-        return allNumbers;
+            return allNumbers;
+        } else {
+            return EMPTY_NUMBERS;
+        }
     }
 
     public List<Integer> getRowNumbers(int row) {
