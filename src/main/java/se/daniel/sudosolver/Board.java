@@ -11,7 +11,7 @@ import static java.util.stream.IntStream.rangeClosed;
 
 public class Board {
 
-    private static SortedSet<Integer> EMPTY_NUMBERS = new TreeSet<>();
+    private static final SortedSet<Integer> EMPTY_NUMBERS = new TreeSet<>();
     
     @Getter
     private final int[][] rows;
@@ -36,6 +36,10 @@ public class Board {
         return rows[row][col];
     }
 
+    public SortedSet<Integer> getAvailableNumbers(int row, int col) {
+        return getAvailableNumbers(row, col, false);
+    }
+    
     public SortedSet<Integer> getAvailableNumbers(int row, int col, boolean numbersAvailableForNumberWithValue) {
         
         if (numbersAvailableForNumberWithValue || getNumber(row, col) == 0) {
@@ -55,14 +59,14 @@ public class Board {
         }
     }
 
-    public List<Integer> getRowNumbers(int row) {
+    private List<Integer> getRowNumbers(int row) {
         return Arrays.stream(rows[row])
                 .filter(v -> v != 0)
                 .boxed()
                 .collect(toList());
     }
 
-    public List<Integer> getColumnNumbers(int col) {
+    private List<Integer> getColumnNumbers(int col) {
         return Arrays.stream(rows)
                 .mapToInt(row -> row[col])
                 .filter(v -> v != 0)
@@ -70,7 +74,7 @@ public class Board {
                 .collect(toList());
     }
 
-    public List<Integer> getGridNumbers(int row, int col) {
+    private List<Integer> getGridNumbers(int row, int col) {
         final var gridRow = row / 3;
         final var gridCol = col / 3;
 
@@ -79,6 +83,15 @@ public class Board {
                 .filter(v -> v != 0)
                 .boxed()
                 .collect(toList());
+    }
+    
+    public boolean isBoardNumbersValid() {
+        try {
+            verifyValidBoardNumbers();
+            return true;
+        } catch (IllegalStateException e) {
+            return false;
+        }
     }
 
     long countUndecidedNumbers() {
@@ -98,7 +111,7 @@ public class Board {
         });
     }
 
-    void verifyValidBoardNumbers() {
+    private void verifyValidBoardNumbers() {
 
         range(0, 9).forEach(r -> {
                 if (isAnyNumbersDuplicates(getRowNumbers(r))) {

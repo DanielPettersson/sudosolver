@@ -31,6 +31,7 @@ public class Main {
         renderer.render();
 
         System.out.println("Solved sudoku in " + (System.currentTimeMillis() - startMillis) + "ms");
+        System.out.println("Board is valid: " + board.isBoardNumbersValid());
 
     }
 }

@@ -21,7 +21,7 @@ public class OneAndOnlyInGridRule extends AbstractOneAndOnlyRule {
                 r -> range(gridCol * 3, gridCol * 3 + 3).forEach(
                         c -> {
                             if (r != row || c != col) {
-                                ret.addAll(board.getAvailableNumbers(r, c, false));
+                                ret.addAll(board.getAvailableNumbers(r, c));
                             }
                         }
                 )

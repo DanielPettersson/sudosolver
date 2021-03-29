@@ -17,7 +17,7 @@ public class OneAndOnlyInColumnRule extends AbstractOneAndOnlyRule {
         range(0, 9).forEach(
                 r -> {
                     if (r != row) {
-                        ret.addAll(board.getAvailableNumbers(r, col, false));
+                        ret.addAll(board.getAvailableNumbers(r, col));
                     }
                 }
         );
